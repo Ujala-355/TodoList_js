@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* .cont{
+            background-color: rgb(195, 195, 228);
+            width: 15vw;
+            height: 50vh;
+            border: 2px solid black;
+        } */
+        .container{
+            overflow:hidden;
+            background-color: aqua;
+            width: 15vw;
+            height: 50vh;
+            margin: auto;
+            border: 2px solid black;
+            color: white;
+        }
+        .tab{
+            float: left;
+            margin-top: 10px;
+        }
+        .tab-2 input{
+            display: block;
+            margin-bottom:20px;
+            margin-left:5px;
+        }
+        tr{
+            transition:all .25s case-in-out;
+        }
+        tr:hover{
+            background-color: rgb(246, 105, 105);
+            cursor:pointer;
+        }
+    </style>
+</head>
+<body class="cont">
+    <div class="container">
+        <div class="tab tab-1">
+            <table id="table" border="1">
+                <tr>
+                    <th>first name</th>
+                    <th>last name</th>
+                    <th>Age</th>
+                </tr>
+                <tr>
+                    <td>Ujala</td>
+                    <td>saini</td>
+                    <td>22</td>
+                </tr>
+                <tr>
+                    <td>Neeraj</td>
+                    <td>saini</td>
+                    <td>23</td>
+                </tr>
+                <tr>
+                    <td>kumkum</td>
+                    <td>saini</td>
+                    <td>22</td>
+                </tr>
+            </table>
+        </div>
+        <div class="tab tab-2">
+            first Name:<input type="text" name="fname" id="fname">
+            last Name:<input type="text" name="lname" id="lname">
+            age:<input type="number" name="age" id="age">
+
+        <button onclick="addHTMLTableRow();">Add</button>
+        <button onclick="editHTMLTableSelectedRow();">Edit</button>
+        <button onclick="removeSelectedRow()">Remove</button>
+        </div>
+    </div>
+
+    <script>
+        var rIndex,
+        table=document.getElementById("table");
+
+        function checkEmptyInput(){
+            var isEmpty=false,
+            fname=document.getElementById("fname").value,
+            lname=document.getElementById("lname").value,
+            age=document.getElementById("age").value;
+
+            if (fname===""){
+                alert("First name Connet be Empty");
+                isEmpty=true;
+            }
+            else if (lname===""){
+                alert("Last name Connet be Empty");
+                isEmpty=true;
+            }
+            else if (age===""){
+                alert("Age Connet be Empty");
+                isEmpty=true;
+            }
+            return isEmpty;
+
+        }
+
+        function addHTMLTableRow(){
+            // var table=document.getElementById("table"),
+
+            if (!checkEmptyInput()){
+            var newRow=table.insertRow(table.length),
+                cell1=newRow.insertCell(0),
+                cell2=newRow.insertCell(1),
+                cell3=newRow.insertCell(2),
+                fname=document.getElementById("fname").value,
+                lname=document.getElementById("lname").value,
+                age=document.getElementById("age").value;
+
+            cell1.innerHTML=fname;
+            cell2.innerHTML=lname;
+            cell3.innerHTML=age;
+            selectedRowToInput();
+            }
+        }
+
+        function selectedRowToInput(){
+            // var rIndex,table=document.getElementById("table");
+            for (var i=1; i<table.rows.length;i++){
+                table.rows[i].onclick=function(){
+                    rIndex=this.rowIndex;
+                    // console.log(rIndex);
+                    document.getElementById('fname').value=this.cells[0].innerHTML;
+                    document.getElementById('lname').value=this.cells[1].innerHTML;
+                    document.getElementById('age').value=this.cells[2].innerHTML;
+                }
+                
+            }
+        }
+        selectedRowToInput();
+
+        function editHTMLTableSelectedRow(){
+            var fname=document.getElementById("fname").value,
+                lname=document.getElementById("lname").value,
+                age=document.getElementById("age").value;
+
+            table.rows[rIndex].cells[0].innerHTML=fname;
+            table.rows[rIndex].cells[1].innerHTML=lname;
+            table.rows[rIndex].cells[2].innerHTML=age;
+        }
+
+        function removeSelectedRow(){
+            table.deleteRow(rIndex);
+
+            document.getElementById("fname").value="";
+            document.getElementById("lname").value="";
+            document.getElementById("age").value="";
+        }
+    </script>
+</body>
+</html>
